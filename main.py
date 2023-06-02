@@ -73,6 +73,9 @@ def mostrar_pid():
     print(f"El PID del proceso actual es: {pid}")
 
 
+def crear_archivo_en_directorio(directorio):
+    os.mkdir(directorio)
+
 def mostrar_menu():
     print("Consola interactiva - Comandos disponibles:")
     print("1. Listar directorios y archivos (solo nombres)")
@@ -87,7 +90,10 @@ def mostrar_menu():
 
 
 def ejecutar_comando(comando):
-    if comando == '1':
+    if comando == "ayuda":
+        mostrar_menu()
+
+    elif comando == '1':
         listar_directorios_archivos()
     elif comando == '2':
         listar_directorios_archivos(nombres_extra=True)
@@ -110,6 +116,11 @@ def ejecutar_comando(comando):
     elif comando == '8':
         # destino = input("Ingrese la ruta absoluta para ver el uso de disco en ella")
         mostrar_uso_disco()
+
+    elif comando == '9':
+        print("Ingrese el nombre del directorio a crear: ")
+        crear_archivo_en_directorio(str(input()))
+
     elif comando == '11':
         print("¡Hasta luego!")
         return False
@@ -122,8 +133,10 @@ def ejecutar_comando(comando):
 def consola():
     mostrar_pid()
     while True:
-        mostrar_menu()
-        comando = input("Ingrese el número de comando que desea ejecutar: ")
+
+        directorio = os.getcwd()
+        print(os.getcwd(), end="> ")
+        comando = str(input())
         if not ejecutar_comando(comando):
             break
 
