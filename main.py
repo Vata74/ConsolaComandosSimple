@@ -51,14 +51,18 @@ def mostrar_uso_disco():
 
 def copiar_archivo(origen, destino):
     try:
+        if not os.path.exists(origen):
+            print("El archivo de origen no existe.")
+            return
+        if os.path.isdir(origen):
+            print("No se puede copiar un directorio.")
+            return
         shutil.copy2(origen, destino)
-        print(f"Archivo copiado de {origen} a {destino}.")
-    except FileNotFoundError:
-        print("El archivo de origen no existe.")
+        print(f"Archivo {origen} copiado a {destino}.")
     except shutil.SameFileError:
         print("El archivo de destino es el mismo que el de origen.")
-    except IsADirectoryError:
-        print("No se puede copiar un directorio.")
+    except Exception as e:
+        print(f"Error al copiar el archivo: {str(e)}")
 
 
 def mover_archivo(origen, destino):
