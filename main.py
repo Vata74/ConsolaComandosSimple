@@ -30,13 +30,17 @@ def moverse_directorio(directorio):
 
 def mostrar_archivo_texto(archivo):
     try:
+        if not os.path.exists(archivo):
+            print("El archivo especificado no existe.")
+            return
+        if os.path.isdir(archivo):
+            print("No se puede mostrar un directorio como archivo de texto.")
+            return
         with open(archivo, 'r') as file:
             contenido = file.read()
             print(f"Contenido de {archivo}:\n{contenido}")
-    except FileNotFoundError:
-        print("El archivo especificado no existe.")
-    except IsADirectoryError:
-        print("No se puede mostrar un directorio como archivo de texto.")
+    except Exception as e:
+        print(f"Error al mostrar el archivo de texto: {str(e)}")
 
 
 def mostrar_uso_disco():
@@ -94,8 +98,6 @@ def eliminar_archivo_vacio_en_directorio(directorio):
     print("Directorio eliminado")
 
 
-
-
 def corroborar_existencia(directorio):
     if(os.path.exists(directorio)):
         print("Directorio existente")
@@ -109,6 +111,7 @@ def escribr_en_archivo(nombre_del_archivo):
     with open(nombre_del_archivo_txt, 'w') as file:
         file.write(str(input("Ingrese el contenido del archivo de texto: ")))
     print(f"Se ha escrito en el archivo '{nombre_del_archivo}'.")
+
 
 def clear_screen():
     # Limpia la pantalla según el sistema operativo
@@ -204,6 +207,7 @@ def ejecutar_comando(comando):
 
     return True
 
+
 def consola():
     mostrar_pid()
 
@@ -233,8 +237,9 @@ comandos = [
     "creart",
     "salir"
 ]
+
 comandos_mayusculas = [comando.upper() for comando in comandos]
 comandos.extend(comandos_mayusculas)
-
 completer = WordCompleter(comandos)
+
 consola()
