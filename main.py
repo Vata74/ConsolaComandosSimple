@@ -122,7 +122,7 @@ def corroborar_existencia(directorio):
         print(f"No existe el directorio {directorio}")
 
 
-def escribr_en_archivo(nombre_del_archivo):
+def escribir_en_archivo(nombre_del_archivo):
     # Abre el archivo en modo escritura y escribe el contenido
     nombre_del_archivo_txt = nombre_del_archivo + ".txt"
     with open(nombre_del_archivo_txt, 'w') as file:
@@ -140,6 +140,7 @@ def clear_screen():
 
 def mostrar_menu():
     comandos = [
+        ("AYUDA", "Proporciona información de Ayuda para los comandos"),
         ("LISTAR", "Listar directorios y archivos (solo nombres)"),
         ("INFO", "Listar directorios y archivos (nombres e información extra)"),
         ("IR", "Moverse de un directorio a otro"),
@@ -152,7 +153,7 @@ def mostrar_menu():
         ("ELIMINAR", "Eliminar archivo vacío en directorio (MODO SEGURO)"),
         ("COMPROBAR", "Corrobrar existencia de un directorio"),
         ("LIMPIAR", "Limpiar pantalla de la consola"),
-        ("CREART", "Crear un archivo de texto y escribir en el mismo"),
+        ("CREART", "Crear y escribir un archivo de texto"),
         ("SALIR", "Salir de la consola")
     ]
     print("")
@@ -214,7 +215,7 @@ def ejecutar_comando(comando):
         clear_screen()
 
     elif comando == 'creart':
-        escribr_en_archivo(str(input("Ingrese el nombre del archivo a crear en el directorio actual: ")))
+        escribir_en_archivo(str(input("Ingrese el nombre del archivo a crear: ")))
 
     elif comando == 'salir':
         print("¡Hasta luego!")
@@ -231,7 +232,15 @@ def consola():
     while True:
         directorio = os.getcwd()
         # La consola en español funciona solamente en la consola del sistema
-        # operativo usando "python main.py" pero ya funciona el autocompletado
+        # operativo usando "python main.py" desde la ruta del proyecyo, pero
+        # ya funciona el autocompletado
+
+        # Anotación, hay algunas funciones que no se ejecutan correctamente si
+        # la cmd no se ejecuta como admin. En windows es tan simple como ejecutar
+        # el cmd como administrador y escribir el comando "python main.py"; en
+        # linux se puede hacer con el comando "sudo python main.py" desde la ruta
+        # del proyecto
+
         comando = prompt(f"{directorio}> ", completer=completer)
         if not ejecutar_comando(comando.lower()):
             break
