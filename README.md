@@ -15,7 +15,7 @@ python --version
 
 4. Abra una terminal con permisos de administrador y navegue hasta el directorio donde se encuentra el archivo main.py del proyecto.
 
-5. Ejecute el siguiente comando para instalar las dependencias necesarias.
+5. Ejecute los siguientes comandos para instalar las dependencias necesarias.
 ```
 pip install os
 pip install platform
