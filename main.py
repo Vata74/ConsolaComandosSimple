@@ -67,12 +67,16 @@ def copiar_archivo(origen, destino):
 
 def mover_archivo(origen, destino):
     try:
+        if not os.path.exists(origen):
+            print("El archivo de origen no existe.")
+            return
+        if os.path.isdir(origen):
+            print("No se puede mover un directorio.")
+            return
         shutil.move(origen, destino)
-        print(f"Archivo movido de {origen} a {destino}.")
-    except FileNotFoundError:
-        print("El archivo de origen no existe.")
-    except shutil.Error as e:
-        print(f"Error al mover el archivo: {e}")
+        print(f"Archivo {origen} movido a {destino}.")
+    except Exception as e:
+        print(f"Error al mover el archivo: {str(e)}")
 
 
 def mostrar_pid():
@@ -205,8 +209,8 @@ def consola():
 
     while True:
         directorio = os.getcwd()
-        # print(os.getcwd(), end="> ")
-
+        # AHORA FUNCIONA SOLAMENTE EN LA CONSOLA EJECUTANDO CON "python main.py"
+        # PERO YA FUNCIONA EL AUTOCOMPLETADO
         comando = prompt(f"{directorio}> ", completer=completer)
         if not ejecutar_comando(comando.lower()):
             break
