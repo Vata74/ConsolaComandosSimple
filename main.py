@@ -43,14 +43,20 @@ def mostrar_archivo_texto(archivo):
         print(f"Error al mostrar el archivo de texto: {str(e)}")
 
 
+# Agrega estas comprobaciones en la función mostrar_uso_disco()
+
 def mostrar_uso_disco():
     try:
+        if not os.path.exists(os.getcwd()):
+            print("El directorio actual no existe.")
+            return
         uso = shutil.disk_usage(os.getcwd())
         print(os.getcwd())
         print(f"Espacio usado del disco {os.path.splitdrive(os.getcwd())[0]} {round(uso.used / (2**30), 2)} GB")
         print(f"Espacio libre del disco {os.path.splitdrive(os.getcwd())[0]} {round(uso.free / (2**30), 2)} GB")
-    except FileNotFoundError:
-        print("Archivo no encontrado")
+    except Exception as e:
+        print(f"Error al mostrar el uso de disco: {str(e)}")
+
 
 
 def copiar_archivo(origen, destino):
