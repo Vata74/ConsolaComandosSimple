@@ -2,6 +2,9 @@ import os
 import shutil
 import platform
 import subprocess
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
+
 
 def listar_directorios_archivos(nombres_extra=False):
     if nombres_extra:
@@ -108,78 +111,84 @@ def clear_screen():
 
 
 def mostrar_menu():
+    comandos = [
+        ("LISTAR", "Listar directorios y archivos (solo nombres)"),
+        ("INFORMACION", "Listar directorios y archivos (nombres e información extra)"),
+        ("IR", "Moverse de un directorio a otro"),
+        ("MOSTRAR", "Mostrar archivo de texto"),
+        ("COPIAR", "Copiar archivos"),
+        ("MOVER", "Mover archivos"),
+        ("PID", "Mostrar PID del proceso"),
+        ("USODISCO", "Revisar el uso de disco"),
+        ("CREARD", "Crear un directorio en el path actual"),
+        ("ELIMINAR", "Eliminar archivo vacío en directorio (MODO SEGURO)"),
+        ("COMPROBAR", "Corrobrar existencia de un directorio"),
+        ("LIMPIAR", "Limpiar pantalla de la consola"),
+        ("CREART", "Crear un archivo de texto y escribir en el mismo"),
+        ("SALIR", "Salir")
+    ]
+    print("")
     print("Consola interactiva - Comandos disponibles:")
-    print("1. Listar directorios y archivos (solo nombres)")
-    print("2. Listar directorios y archivos (nombres e información extra)")
-    print("3. Moverse de un directorio a otro")
-    print("4. Mostrar archivo de texto")
-    print("5. Copiar archivos")
-    print("6. Mover archivos")
-    print("7. Mostrar PID del proceso")
-    print("8. Revisar el uso de disco")
-    print("9. Crear un directorio en el path actual")
-    print("10. Eliminar archivo vacío en directorio (MODO SEGURO)")
-    print("11. Corrobrar existencia de un directorio")
-    print("12. Limpiar pantalla de la consola")
-    print("13. Crear un archivo de texto y escribir en el mismo")
-    print("30. Salir")
+    print("")
+    for comando, descripcion in comandos:
+        print(f"{comando.ljust(15)}{descripcion}")
+    print("")
 
 
 def ejecutar_comando(comando):
     if comando == "ayuda":
         mostrar_menu()
 
-    elif comando == '1':
+    elif comando == 'listar':
         listar_directorios_archivos()
 
-    elif comando == '2':
+    elif comando == 'informacion':
         listar_directorios_archivos(nombres_extra=True)
 
-    elif comando == '3':
+    elif comando == 'ir':
         directorio = input("Ingrese el directorio al que desea moverse: ")
         moverse_directorio(directorio)
 
-    elif comando == '4':
+    elif comando == 'mostrar':
         archivo = input("Ingrese el archivo de texto que desea mostrar: ")
         mostrar_archivo_texto(archivo)
 
-    elif comando == '5':
+    elif comando == 'copiar':
         origen = input("Ingrese la ruta del archivo que desea copiar: ")
         destino = input("Ingrese la ruta de destino para la copia: ")
         copiar_archivo(origen, destino)
 
-    elif comando == '6':
+    elif comando == 'mover':
         origen = input("Ingrese la ruta del archivo que desea mover: ")
         destino = input("Ingrese la ruta de destino para el movimiento: ")
         mover_archivo(origen, destino)
 
-    elif comando == '7':
+    elif comando == 'pid':
         mostrar_pid()
 
-    elif comando == '8':
+    elif comando == 'uso':
         mostrar_uso_disco()
 
-    elif comando == '9':
+    elif comando == 'creard':
         print("Ingrese el nombre del directorio a crear: ")
         crear_archivo_en_directorio(str(input()))
 
-    elif comando == '10':
+    elif comando == 'eliminar':
         # Este puede romperme la pc así que probemoslo con cuidado
         print("Ingrese el nombre del archivo vacío a borrar (modo seguro)")
         eliminar_archivo_vacio_en_directorio(os.getcwd())
 
-    elif comando == '11':
-        print("Ingrese el directorio a corroborar")
+    elif comando == 'comprobar':
+        print("Ingrese el directorio a comprobar")
         corroborar_existencia(str(input()))
 
-    elif comando == '12':
-        # Funciona únicamente en el cmd
+    elif comando == 'limpiar':
         clear_screen()
 
-    elif comando == '13':
+    elif comando == 'creart':
         escribr_en_archivo(str(input("Ingrese el nombre del archivo a crear en el directorio actual: ")))
 
-    elif comando == '30':
+    elif comando == 'salir':
         print("¡Hasta luego!")
         return False
     else:
@@ -189,11 +198,35 @@ def ejecutar_comando(comando):
 
 def consola():
     mostrar_pid()
-    while True:
 
+    while True:
         directorio = os.getcwd()
-        print(os.getcwd(), end="> ")
-        comando = str(input())
-        if not ejecutar_comando(comando):
+        # print(os.getcwd(), end="> ")
+
+        comando = prompt(f"{directorio}> ", completer=completer)
+        if not ejecutar_comando(comando.lower()):
             break
+
+
+comandos = [
+    "ayuda",
+    "listar",
+    "informacion",
+    "ir",
+    "mostrar",
+    "copiar",
+    "mover",
+    "pid",
+    "usodisco",
+    "creard",
+    "eliminar",
+    "comprobar",
+    "limpiar",
+    "creart",
+    "salir"
+]
+comandos_mayusculas = [comando.upper() for comando in comandos]
+comandos.extend(comandos_mayusculas)
+
+completer = WordCompleter(comandos)
 consola()
