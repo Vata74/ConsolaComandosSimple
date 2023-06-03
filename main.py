@@ -1,7 +1,7 @@
 import os
-import shutil
 import platform
-import subprocess
+import shutil
+
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 
@@ -43,20 +43,16 @@ def mostrar_archivo_texto(archivo):
         print(f"Error al mostrar el archivo de texto: {str(e)}")
 
 
-# Agrega estas comprobaciones en la función mostrar_uso_disco()
-
 def mostrar_uso_disco():
     try:
         if not os.path.exists(os.getcwd()):
             print("El directorio actual no existe.")
             return
         uso = shutil.disk_usage(os.getcwd())
-        print(os.getcwd())
-        print(f"Espacio usado del disco {os.path.splitdrive(os.getcwd())[0]} {round(uso.used / (2**30), 2)} GB")
-        print(f"Espacio libre del disco {os.path.splitdrive(os.getcwd())[0]} {round(uso.free / (2**30), 2)} GB")
+        print(f"Espacio usado del disco {os.path.splitdrive(os.getcwd())[0]} {round(uso.used / (2 ** 30), 2)} GB")
+        print(f"Espacio libre del disco {os.path.splitdrive(os.getcwd())[0]} {round(uso.free / (2 ** 30), 2)} GB")
     except Exception as e:
         print(f"Error al mostrar el uso de disco: {str(e)}")
-
 
 
 def copiar_archivo(origen, destino):
@@ -105,7 +101,7 @@ def eliminar_archivo_vacio_en_directorio(directorio):
 
 
 def corroborar_existencia(directorio):
-    if(os.path.exists(directorio)):
+    if (os.path.exists(directorio)):
         print("Directorio existente")
     else:
         print(f"No existe el directorio {directorio}")
@@ -113,7 +109,7 @@ def corroborar_existencia(directorio):
 
 def escribr_en_archivo(nombre_del_archivo):
     # Abre el archivo en modo escritura y escribe el contenido
-    nombre_del_archivo_txt = nombre_del_archivo+".txt"
+    nombre_del_archivo_txt = nombre_del_archivo + ".txt"
     with open(nombre_del_archivo_txt, 'w') as file:
         file.write(str(input("Ingrese el contenido del archivo de texto: ")))
     print(f"Se ha escrito en el archivo '{nombre_del_archivo}'.")
@@ -136,13 +132,13 @@ def mostrar_menu():
         ("COPIAR", "Copiar archivos"),
         ("MOVER", "Mover archivos"),
         ("PID", "Mostrar PID del proceso"),
-        ("USODISCO", "Revisar el uso de disco"),
-        ("CREARD", "Crear un directorio en el path actual"),
+        ("USO", "Revisar el uso de disco actual"),
+        ("CREARD", "Crear un directorio en la ruta actual"),
         ("ELIMINAR", "Eliminar archivo vacío en directorio (MODO SEGURO)"),
         ("COMPROBAR", "Corrobrar existencia de un directorio"),
         ("LIMPIAR", "Limpiar pantalla de la consola"),
         ("CREART", "Crear un archivo de texto y escribir en el mismo"),
-        ("SALIR", "Salir")
+        ("SALIR", "Salir de la consola")
     ]
     print("")
     print("Consola interactiva - Comandos disponibles:")
@@ -219,13 +215,14 @@ def consola():
 
     while True:
         directorio = os.getcwd()
-        # AHORA FUNCIONA SOLAMENTE EN LA CONSOLA EJECUTANDO CON "python main.py"
-        # PERO YA FUNCIONA EL AUTOCOMPLETADO
+        # La consola en español funciona solamente en la consola del sistema
+        # operativo usando "python main.py" pero ya funciona el autocompletado
         comando = prompt(f"{directorio}> ", completer=completer)
         if not ejecutar_comando(comando.lower()):
             break
 
 
+# Este array sirve para el autocompletar
 comandos = [
     "ayuda",
     "listar",
@@ -235,7 +232,7 @@ comandos = [
     "copiar",
     "mover",
     "pid",
-    "usodisco",
+    "uso",
     "creard",
     "eliminar",
     "comprobar",
