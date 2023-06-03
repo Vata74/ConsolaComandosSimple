@@ -21,7 +21,6 @@ pip install os
 pip install platform
 pip install shutil
 pip install prompt_toolkit
- 
 ```
 
 6. Ejecute el siguiente comando para iniciar la consola interactiva:
