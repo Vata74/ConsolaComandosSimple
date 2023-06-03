@@ -91,13 +91,28 @@ def mostrar_pid():
 
 
 def crear_archivo_en_directorio(directorio):
-    os.mkdir(directorio)
-    print("Directorio creado")
+    try:
+        if os.path.exists(directorio):
+            print("El directorio ya existe.")
+            return
+        os.mkdir(directorio)
+        print("Directorio creado")
+    except Exception as e:
+        print(f"Error al crear el directorio: {str(e)}")
 
 
 def eliminar_archivo_vacio_en_directorio(directorio):
-    os.rmdir(directorio)
-    print("Directorio eliminado")
+    try:
+        if not os.path.exists(directorio):
+            print("El directorio no existe.")
+            return
+        if not os.path.isdir(directorio):
+            print("No se puede eliminar un archivo vacío en un directorio.")
+            return
+        os.rmdir(directorio)
+        print("Directorio eliminado")
+    except Exception as e:
+        print(f"Error al eliminar el directorio: {str(e)}")
 
 
 def corroborar_existencia(directorio):
@@ -126,7 +141,7 @@ def clear_screen():
 def mostrar_menu():
     comandos = [
         ("LISTAR", "Listar directorios y archivos (solo nombres)"),
-        ("INFORMACION", "Listar directorios y archivos (nombres e información extra)"),
+        ("INFO", "Listar directorios y archivos (nombres e información extra)"),
         ("IR", "Moverse de un directorio a otro"),
         ("MOSTRAR", "Mostrar archivo de texto"),
         ("COPIAR", "Copiar archivos"),
@@ -155,7 +170,7 @@ def ejecutar_comando(comando):
     elif comando == 'listar':
         listar_directorios_archivos()
 
-    elif comando == 'informacion':
+    elif comando == 'info':
         listar_directorios_archivos(nombres_extra=True)
 
     elif comando == 'ir':
@@ -226,7 +241,7 @@ def consola():
 comandos = [
     "ayuda",
     "listar",
-    "informacion",
+    "info",
     "ir",
     "mostrar",
     "copiar",
