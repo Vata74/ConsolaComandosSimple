@@ -1,6 +1,7 @@
 import os
 import platform
 import shutil
+import time
 
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
@@ -154,7 +155,9 @@ def mostrar_menu():
         ("COMPROBAR", "Corrobrar existencia de un directorio"),
         ("LIMPIAR", "Limpiar pantalla de la consola"),
         ("CREART", "Crear y escribir un archivo de texto"),
-        ("SALIR", "Salir de la consola")
+        ("SALIR", "Salir de la consola"),
+        ("BUSCAR", "Buscar un archivo en el directorio")
+        ("CANTIDAD", "Cantidad de archivos en el directorio")
     ]
     print("")
     print("Consola interactiva - Comandos disponibles:")
@@ -163,6 +166,29 @@ def mostrar_menu():
         print(f"{comando.ljust(15)}{descripcion}")
     print("")
 
+
+def buscar_archivo(nombre_archivo):
+    for root, dirs, files in os.walk(os.getcwd()):
+        if nombre_archivo in files:
+            print(f"Archivo {nombre_archivo} encontrado en {root}.")
+            return
+    print(f"No se encontró el archivo {nombre_archivo}.")
+
+
+def obtener_cantidad_archivos(directorio):
+    if not os.path.isdir(directorio):
+        print("El directorio especificado no existe.")
+        return
+
+    lista_elementos = os.listdir(directorio)
+    cantidad_archivos = 0
+
+    for elemento in lista_elementos:
+        ruta_elemento = os.path.join(directorio, elemento)
+        if os.path.isfile(ruta_elemento):
+            cantidad_archivos += 1
+
+    return cantidad_archivos
 
 def ejecutar_comando(comando):
     if comando == "ayuda":
@@ -217,12 +243,18 @@ def ejecutar_comando(comando):
     elif comando == 'creart':
         escribir_en_archivo(str(input("Ingrese el nombre del archivo a crear: ")))
 
+    elif comando == 'buscar':
+        argumento = str(input())
+        buscar_archivo(argumento)
+
+    elif comando == 'cantidad':
+        print(f"Cantidad de archivos en el directorio: {obtener_cantidad_archivos(os.getcwd())}")
+
     elif comando == 'salir':
         print("¡Hasta luego!")
         return False
     else:
         print("Comando inválido. Intente nuevamente.")
-
     return True
 
 
@@ -262,7 +294,9 @@ comandos = [
     "comprobar",
     "limpiar",
     "creart",
-    "salir"
+    "salir",
+    "buscar",
+    "cantidad"
 ]
 
 comandos_mayusculas = [comando.upper() for comando in comandos]
