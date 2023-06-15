@@ -140,32 +140,71 @@ def clear_screen():
 
 
 def mostrar_menu():
+    '''
     comandos = [
-        ("AYUDA", "Proporciona información de Ayuda para los comandos"),
+        ("AYUDA", "Proporciona información de Ayuda para los comandos\n"),
+        ("------------------DIRECTORIOS------------------"),
         ("LISTAR", "Listar directorios y archivos (solo nombres)"),
         ("INFO", "Listar directorios y archivos (nombres e información extra)"),
         ("IR", "Moverse de un directorio a otro"),
-        ("MOSTRAR", "Mostrar archivo de texto"),
-        ("COPIAR", "Copiar archivos"),
-        ("MOVER", "Mover archivos"),
-        ("PID", "Mostrar PID del proceso"),
-        ("USO", "Revisar el uso de disco actual"),
         ("CREARD", "Crear un directorio en la ruta actual"),
-        ("ELIMINAR", "Eliminar archivo vacío en directorio (MODO SEGURO)"),
-        ("COMPROBAR", "Corrobrar existencia de un directorio"),
-        ("LIMPIAR", "Limpiar pantalla de la consola"),
+        ("COMPROBAR", "Corrobrar existencia de un directorio\n"),
+        ("------------------ARCHIVOS---------------------"),
         ("CREART", "Crear y escribir un archivo de texto"),
+        ("MOSTRAR", "Mostrar archivo de texto"),
+        ("ELIMINAR", "Eliminar archivo vacío en directorio (MODO SEGURO)"),
+        ("COPIAR", "Copiar archivos"),
+        ("MOVER", "Mover archivos\n"),
+        ("------------------ALMACENAMIENTO----------------"),
+        ("USO", "Revisar el uso de disco en el directorio actual\n"),
+        ("------------------BÚSQUEDA----------------------"),
+        ("BUSCAR", "Buscar un archivo en el directorio"),
+        ("CANTIDAD", "Cantidad de archivos en el directorio\n"),
+        ("------------------CONSOLA-----------------------"),
+        ("LIMPIAR", "Limpiar pantalla de la consola"),
         ("SALIR", "Salir de la consola"),
-        ("BUSCAR", "Buscar un archivo en el directorio")
-        ("CANTIDAD", "Cantidad de archivos en el directorio")
+        ("------------------PID---------------------------"),
+        ("PID", "Mostrar PID del proceso")
     ]
     print("")
     print("Consola interactiva - Comandos disponibles:")
     print("")
     for comando, descripcion in comandos:
-        print(f"{comando.ljust(15)}{descripcion}")
+        print(f"{comando.ljust(23)}{descripcion}")
     print("")
+    '''
 
+    #Perdón vata, saqué lo otro porque no me estaba funcionando bien, si querés cambiarlo cambialo
+
+    print("AYUDA Proporciona información de Ayuda para los comandos\n\n "
+                "------------------DIRECTORIOS------------------\n"
+                "LISTAR Listar directorios y archivos (solo nombres)\n"          
+                "INFO Listar directorios y archivos (nombres e información extra)\n"
+                "IR Moverse de un directorio a otro\n"
+                "CREARD Crear un directorio en la ruta actual\n"
+                "COMPROBAR Corrobrar existencia de un directorio\n\n"
+                "------------------ARCHIVOS---------------------\n"
+                "CREART Crear y escribir un archivo de texto\n"
+                "MOSTRAR Mostrar archivo de texto\n"
+                "ELIMINAR Eliminar archivo vacío en directorio (MODO SEGURO)\n"
+                "COPIAR Copiar archivos\n"
+                "MOVER Mover archivos\n\n"
+                "------------------CPU---------------------\n"
+                "CPU Ver detalles del cpu\n\n"
+                "------------------ARQUITECTURA---------------------\n"
+                "ARQUITECTURA Ver arquitectura del sistema\n\n"
+                "------------------ALMACENAMIENTO----------------\n"
+                "USO Revisar el uso de disco actual\n\n"
+                "------------------PYTHON----------------\n"
+                "PYTHON Versión de Python\n\n"
+                "------------------BÚSQUEDA----------------------\n"
+                "BUSCAR Buscar un archivo en el directorio\n"
+                "CANTIDAD Cantidad de archivos en el directorio\n\n"
+                "------------------CONSOLA-----------------------\n"
+                "LIMPIAR Limpiar pantalla de la consola\n"
+                "SALIR Salir de la consola\n\n"
+                "------------------PID---------------------------\n"
+                "PID Mostrar PID del proceso\n\n")
 
 def buscar_archivo(nombre_archivo):
     for root, dirs, files in os.walk(os.getcwd()):
@@ -189,6 +228,17 @@ def obtener_cantidad_archivos(directorio):
             cantidad_archivos += 1
 
     return cantidad_archivos
+
+def info_cpu():
+    print(f" Cantidad de núcleos del cpu: {os.cpu_count()}")
+    print(f" Información detallada: {platform.processor()}")
+
+def arquitectura_del_sistema():
+    print(f"Arquitectura del sistema: {platform.architecture()})")
+
+def version_de_python():
+    print(f"Versión de Python: {platform.python_version()}")
+
 
 def ejecutar_comando(comando):
     if comando == "ayuda":
@@ -250,6 +300,15 @@ def ejecutar_comando(comando):
     elif comando == 'cantidad':
         print(f"Cantidad de archivos en el directorio: {obtener_cantidad_archivos(os.getcwd())}")
 
+    elif comando == 'cpu':
+        info_cpu()
+
+    elif comando == 'arquitectura':
+        arquitectura_del_sistema()
+
+    elif comando == 'python':
+        version_de_python()
+
     elif comando == 'salir':
         print("¡Hasta luego!")
         return False
@@ -296,7 +355,10 @@ comandos = [
     "creart",
     "salir",
     "buscar",
-    "cantidad"
+    "cantidad",
+    "cpu",
+    "python",
+    "arquitectura"
 ]
 
 comandos_mayusculas = [comando.upper() for comando in comandos]
