@@ -53,4 +53,13 @@ Una vez que la consola interactiva esté en funcionamiento, podrá ingresar coma
 
 Siga las instrucciones proporcionadas por cada comando para realizar las acciones deseadas.
 
+## Funcionamiento
+
+La consola se encarga de hacer diversas llamadas al sistema, para ello hace uso de las librerías os, platform y shutil.
+
+**Sobre OS:**
+La librería nos proporciona funciones para interactuar con el sistema operativo en el que se ejecuta la consola. Permite realizar operaciones relacionadas con archivos, directorios, variables de entorno, procesos y mucho más. 
+
+
+
 ¡Gracias por utilizar esta consola interactiva para la gestión de archivos!
