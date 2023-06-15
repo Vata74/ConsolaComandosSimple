@@ -46,7 +46,10 @@ Una vez que la consola interactiva esté en funcionamiento, podrá ingresar coma
 - `comprobar`: Verifica la existencia de un directorio.
 - `limpiar`: Limpia la pantalla de la consola.
 - `creart`: Crea y escribe en un archivo de texto.
+- `buscar`: Busca un archivo específico en el directorio seleccionado
+- `cantidad`: Enumera la cantidad de archivos en el directorio seleccionado
 - `salir`: Sale de la consola interactiva.
+  
 
 Siga las instrucciones proporcionadas por cada comando para realizar las acciones deseadas.
 
