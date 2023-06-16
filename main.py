@@ -191,8 +191,9 @@ def mostrar_menu():
                 "MOVER Mover archivos\n\n"
                 "------------------CPU---------------------\n"
                 "CPU Ver detalles del cpu\n\n"
-                "------------------ARQUITECTURA---------------------\n"
-                "ARQUITECTURA Ver arquitectura del sistema\n\n"
+                "------------------SISTEMA---------------------\n"
+                "ARQUITECTURA Ver arquitectura del sistema\n"
+                "PERMISOS Ver los permisos de lectura/escritura de un archivo del directorio actual\n\n"
                 "------------------ALMACENAMIENTO----------------\n"
                 "USO Revisar el uso de disco actual\n\n"
                 "------------------PYTHON----------------\n"
@@ -235,10 +236,23 @@ def info_cpu():
 
 def arquitectura_del_sistema():
     print(f"Arquitectura del sistema: {platform.architecture()})")
+    print(f"Detalles del sistema: {platform.uname()}")
 
 def version_de_python():
     print(f"Versión de Python: {platform.python_version()}")
+    print(f"Compilador de Python: {platform.python_compiler()}")
 
+def ver_permisos(archivo):
+
+    if(os.path.exists(archivo)):
+        if(os.access(archivo, os.R_OK)):
+            print(f"Tienes permiso de lectura en el archivo {archivo}")
+        if(os.access(archivo, os.W_OK)):
+            print(f"Tienes permiso de escritura en el archivo {archivo}")
+        if not (os.access(archivo, os.W_OK)) and not (os.access(archivo, os.R_OK)):
+            print(f"No tienes permisos de lectura ni de escritura en el archivo {archivo}")
+    else:
+        print(f"El archivo {archivo} no existe")
 
 def ejecutar_comando(comando):
     if comando == "ayuda":
@@ -309,9 +323,13 @@ def ejecutar_comando(comando):
     elif comando == 'python':
         version_de_python()
 
+    elif comando == 'permisos':
+        ver_permisos(str(input("Ingrese el nombre del archivo: ")))
+
     elif comando == 'salir':
         print("¡Hasta luego!")
         return False
+
     else:
         print("Comando inválido. Intente nuevamente.")
     return True
@@ -358,7 +376,8 @@ comandos = [
     "cantidad",
     "cpu",
     "python",
-    "arquitectura"
+    "arquitectura",
+    "permisos"
 ]
 
 comandos_mayusculas = [comando.upper() for comando in comandos]
