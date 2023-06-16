@@ -183,6 +183,7 @@ def mostrar_menu():
                 "IR Moverse de un directorio a otro\n"
                 "CREARD Crear un directorio en la ruta actual\n"
                 "COMPROBAR Corrobrar existencia de un directorio\n\n"
+                "ABRIR Abrir directorios\n"
                 "------------------ARCHIVOS---------------------\n"
                 "CREART Crear y escribir un archivo de texto\n"
                 "MOSTRAR Mostrar archivo de texto\n"
@@ -253,6 +254,13 @@ def ver_permisos(archivo):
             print(f"No tienes permisos de lectura ni de escritura en el archivo {archivo}")
     else:
         print(f"El archivo {archivo} no existe")
+
+
+def abrir_directorio(nombre):
+    try:
+        os.startfile(os.getcwd()+nombre)
+    except Exception as e:
+        print(f"No se encontró el directorio {nombre}")
 
 def ejecutar_comando(comando):
     if comando == "ayuda":
@@ -326,6 +334,9 @@ def ejecutar_comando(comando):
     elif comando == 'permisos':
         ver_permisos(str(input("Ingrese el nombre del archivo: ")))
 
+    elif comando == 'abrird':
+        abrir_directorio(str(input('Ingrese el nombre del directorio: ')))
+
     elif comando == 'salir':
         print("¡Hasta luego!")
         return False
@@ -377,7 +388,8 @@ comandos = [
     "cpu",
     "python",
     "arquitectura",
-    "permisos"
+    "permisos",
+    "abrird"
 ]
 
 comandos_mayusculas = [comando.upper() for comando in comandos]
