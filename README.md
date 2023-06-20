@@ -46,9 +46,13 @@ Una vez que la consola interactiva esté en funcionamiento, podrá ingresar coma
 - `comprobar`: Verifica la existencia de un directorio.
 - `limpiar`: Limpia la pantalla de la consola.
 - `creart`: Crea y escribe en un archivo de texto.
-- `buscar`: Busca un archivo específico en el directorio seleccionado
-- `cantidad`: Enumera la cantidad de archivos en el directorio seleccionado
-- `salir`: Sale de la consola interactiva.
+- `buscar`: Busca un archivo específico en el directorio seleccionado.
+- `cantidad`: Enumera la cantidad de archivos en el directorio seleccionado.
+- `cpu`: Muestra información sobre el CPU.
+- `python`: Muestra la versión de Python.
+- `arquitectura`: Muestra la arquitectura del sistema.
+- `permisos`: Muestra los permisos de lectura/escritura de un archivo del directorio actual.
+- `abrird`: Abre un directorio.
   
 
 Siga las instrucciones proporcionadas por cada comando para realizar las acciones deseadas.
